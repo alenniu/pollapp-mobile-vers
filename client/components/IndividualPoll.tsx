@@ -29,10 +29,9 @@ export default function IndividualPoll(props) {
   }, []);
 
   async function voteFunction(pollId, option) {
+    setDontRender(true);
     await dispatch(vote(pollId, { answer: option }));
-    console.log(pollId, option);
     if (error.message == "Already voted") {
-      console.log(error.message);
       return;
     } else {
       let highestOption = "";
@@ -43,7 +42,8 @@ export default function IndividualPoll(props) {
           highestOption = option.option;
         }
       });
-      if (option.option == highestOption) {
+
+      if (option == highestOption) {
         dispatch(
           xpIncrease(auth.user.id, {
             xpIncrease: parseInt(10, 10),
@@ -145,6 +145,9 @@ export default function IndividualPoll(props) {
                         alignItems: "center",
                         borderRadius: "10",
                       }}
+                      onPress={() =>
+                        voteFunction(props.post._id, option.option)
+                      }
                     >
                       <Text>Vote</Text>
                     </TouchableOpacity>
@@ -186,7 +189,7 @@ export default function IndividualPoll(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: Dimensions.get("window").height - 48,
+    height: Dimensions.get("window").height - 192,
     width: "100%",
     alignItems: "center",
     justifyContent: "center",

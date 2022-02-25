@@ -31,10 +31,18 @@ exports.updateSchool = async (req, res, next) => {
     const { id: schoolId } = req.params;
     const { id: userId } = req.decoded;
     const { increasePoints, student } = req.body;
+    const { opposingSchoolId, opposingSchoolName } = req.body;
 
     const school = await db.School.findById(schoolId);
     const user = await db.User.findById(student);
     if (!school) throw new Error("No school found");
+
+    if (opposingSchoolId) {
+      const finalSchool = { opposingSchoolId, opposingSchoolName };
+      school.opposingSchool.push(finalSchool);
+      await school.save();
+      res.status(202).json(school);
+    }
 
     if (!student) {
       // do the points function

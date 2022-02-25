@@ -137,7 +137,7 @@ export default function Polls() {
         data={polls}
         renderItem={({ item }) => <IndividualPoll post={item} />}
         showsVerticalScrollIndicator={false}
-        snapToInterval={Dimensions.get("window").height - 48}
+        snapToInterval={Dimensions.get("window").height - 192}
         snapToAlignment={"start"}
         decelerationRate={"fast"}
       />

@@ -8,6 +8,7 @@ const schoolSchema = new mongoose.Schema({
   },
   // students: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   students: [{}],
+  opposingSchool: [{}],
 });
 
 module.exports = mongoose.model("School", schoolSchema);
