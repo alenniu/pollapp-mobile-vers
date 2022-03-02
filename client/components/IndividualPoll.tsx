@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Polls from "../components/Polls";
 import ErrorMessage from "../components/ErrorMessage";
 import RNPoll, { IChoice } from "react-native-poll";
-import { vote, xpIncrease } from "../store/actions";
+import { vote, xpIncrease, increasePoints } from "../store/actions";
 import { useEffect } from "react";
 import { useState } from "react";
 const { width, height } = Dimensions.get("window");
@@ -47,6 +47,11 @@ export default function IndividualPoll(props) {
         dispatch(
           xpIncrease(auth.user.id, {
             xpIncrease: parseInt(10, 10),
+          })
+        );
+        dispatch(
+          increasePoints(auth.user.id, {
+            increasePoints: parseInt(10, 10),
           })
         );
       }

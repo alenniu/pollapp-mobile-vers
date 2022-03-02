@@ -2,7 +2,7 @@ import { addError, removeError } from "./error";
 import { SET_CURRENT_USER } from "../actionTypes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "../../services/api";
-import { getSchool } from "./school";
+import { getSchool, setCurrentUserSchool } from "./school";
 
 export const setCurrentUser = (user) => ({
   type: SET_CURRENT_USER,
@@ -68,6 +68,22 @@ export const xpIncrease = (path, data) => {
       );
       const user = { username, id, xp, polls };
       dispatch(setCurrentUser(user));
+      dispatch(removeError());
+    } catch (err) {
+      const error = err.response.data;
+      dispatch(addError(error.message));
+    }
+  };
+};
+
+export const increasePoints = (path, data) => {
+  return async (dispatch) => {
+    try {
+      const { school } = await api.call("get", `users/${path}`);
+
+      const result = await api.call("post", `schools/${school}`, data);
+
+      dispatch(setCurrentUserSchool(result));
       dispatch(removeError());
     } catch (err) {
       const error = err.response.data;

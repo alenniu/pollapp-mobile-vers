@@ -13,68 +13,52 @@ import { useState } from "react";
 import Greengemicon from "../assets/svgs/topbar/greengemicon";
 import Usericon from "../assets/svgs/topbar/usericon";
 import Notificationicon from "../assets/svgs/topbar/notificationicon";
+import * as Progress from "react-native-progress";
 
 const { width, height } = Dimensions.get("window");
 
-export default function TopBar() {
+export default function XpBar() {
   const auth = useSelector((state) => state.auth);
 
   return (
     <View
       style={{
-        height: 100,
+        height: 50,
         width: width,
-        backgroundColor: "#FAFCFF",
+        // backgroundColor: "blue",
         justifyContent: "space-around",
         alignItems: "center",
         flexDirection: "row",
-        paddingTop: 50,
+        marginTop: 10,
       }}
     >
-      <View style={{ flexDirection: "row" }}>
-        <TouchableOpacity
+      <View style={{ marginLeft: 10 }}>
+        <Text
           style={{
-            height: 40,
-            width: 40,
-            backgroundColor: "#FAFCFF",
-            borderRadius: 50,
-            shadowOffset: { width: 0, height: 1 },
-            shadowColor: "#000000",
-            shadowOpacity: 0.2,
-            shadowRadius: 10,
-            justifyContent: "center",
-            alignItems: "center",
+            fontFamily: "Rubik-Bold",
+            // marginRight: 5,
+            fontSize: 15,
+            color: "#4B6EF6",
           }}
         >
-          <Notificationicon />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            height: 40,
-            width: 40,
-            backgroundColor: "#FAFCFF",
-            borderRadius: 50,
-            shadowOffset: { width: 0, height: 1 },
-            shadowColor: "#000000",
-            shadowOpacity: 0.2,
-            shadowRadius: 10,
-            marginLeft: 10,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Usericon />
-        </TouchableOpacity>
+          XP
+        </Text>
       </View>
 
-      <Image
-        style={{ width: 80, height: 80, resizeMode: "stretch" }}
-        source={require("../assets/images/genbluelogo.png")}
+      <Progress.Bar
+        progress={0.5}
+        width={280}
+        height={13}
+        color="#4EBFFF"
+        unfilledColor="#B2E3FF"
+        borderRadius={15}
+        borderWidth={0}
       />
+
       <View
         style={{
-          height: 40,
-          width: 90,
+          height: 30,
+          width: 30,
           backgroundColor: "#FAFCFF",
           borderRadius: 20,
           alignItems: "center",
@@ -84,19 +68,19 @@ export default function TopBar() {
           shadowColor: "#000000",
           shadowOpacity: 0.2,
           shadowRadius: 10,
+          marginRight: 10,
         }}
       >
         <Text
           style={{
             fontFamily: "Rubik-Bold",
-            marginRight: 5,
-            fontSize: 16,
+            // marginRight: 5,
+            fontSize: 15,
             color: "#4B6EF6",
           }}
         >
-          500
+          {xpToLevel(auth.user.xp)}
         </Text>
-        <Greengemicon />
       </View>
 
       {/* <Text>XP: {auth.user.xp}</Text>

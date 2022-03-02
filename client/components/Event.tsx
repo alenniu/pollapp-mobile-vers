@@ -22,7 +22,7 @@ export default function Event() {
 
   useEffect(() => {
     if (ownSchool == false) {
-      dispatch(getSchool(currentSchool));
+      dispatch(getSchool(currentSchool.opposingSchool[0].opposingSchoolId));
     } else {
       dispatch(getSchool(auth.user.school));
     }
@@ -35,43 +35,56 @@ export default function Event() {
       return <Text>--{student.username}-</Text>;
     });
   }
+  if (Object.keys(currentSchool).length === 0) {
+    return (
+      <View>
+        <Text>Loading</Text>
+      </View>
+    );
+  } else {
+    if (ownSchool) {
+      var rivalName = currentSchool.opposingSchool[0].opposingSchoolName;
+    } else {
+      var rivalName = currentSchool.name;
+    }
 
-  return (
-    <View
-      style={{
-        height: 200,
-        width: width,
-
-        justifyContent: "center",
-        alignItems: "center",
-        paddingTop: 150,
-      }}
-    >
-      <Text>School: {currentSchool.name}</Text>
-      <Text>Schools Total Points: {currentSchool.points}</Text>
-      <Text>
-        Students: <View>{students}</View>
-      </Text>
-      <TouchableOpacity
+    return (
+      <View
         style={{
-          width: 50,
-          height: 50,
-          backgroundColor: "blue",
-          marginRight: 50,
+          height: 200,
+          width: width,
+
+          justifyContent: "center",
+          alignItems: "center",
+          paddingTop: 150,
         }}
-        onPress={() => setOwnSchool(true)}
-        disabled={ownSchool ? true : false}
       >
-        <Text>My School</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{ width: 50, height: 50, backgroundColor: "green" }}
-        onPress={() => setOwnSchool(false)}
-      >
-        {/* <Text>{currentSchool.opposingSchool[0].opposingSchoolName}</Text> */}
-      </TouchableOpacity>
-    </View>
-  );
+        <Text>School: {currentSchool.name}</Text>
+        <Text>Schools Total Points: {currentSchool.points}</Text>
+        <Text>
+          Students: <View>{students}</View>
+        </Text>
+        <TouchableOpacity
+          style={{
+            width: 50,
+            height: 50,
+            backgroundColor: "blue",
+            marginRight: 50,
+          }}
+          onPress={() => setOwnSchool(true)}
+          disabled={ownSchool ? true : false}
+        >
+          <Text>My School</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ width: 50, height: 50, backgroundColor: "green" }}
+          onPress={() => setOwnSchool(false)}
+        >
+          <Text>{rivalName}</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
